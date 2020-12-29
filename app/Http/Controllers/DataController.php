@@ -8,7 +8,8 @@ use App\Models\Data;
 class DataController extends Controller
 {
     public function index() {
-        return Data::all();
+        $data = Data::all();
+        return view('dashboard', compact('data'));
     }
 
     public function show(Data $data) {

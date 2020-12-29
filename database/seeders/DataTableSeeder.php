@@ -4,7 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use App\Models\Data;
-
+use
 class DataTableSeeder extends Seeder
 {
     /**

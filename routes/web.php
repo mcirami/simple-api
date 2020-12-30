@@ -18,6 +18,10 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/dashboard', [DataController::class, 'index'])->middleware(['auth'])->name('dashboard');
+Route::group(['middleware' => 'auth'], function() {
+    Route::get('/dashboard', [DataController::class, 'index'])->name('dashboard');
+    Route::get('/export', [DataController::class, 'export'])->name('export');
+});
+
 
 require __DIR__.'/auth.php';

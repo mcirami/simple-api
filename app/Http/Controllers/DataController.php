@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Data;
+use App\Exports\DataExport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class DataController extends Controller
 {
@@ -34,4 +36,11 @@ class DataController extends Controller
         return response()->json(null, 204);
     }
 
+    /**
+     * @return \Illuminate\Support\Collection
+     */
+    public function export()
+    {
+        return Excel::download(new DataExport, 'data.xlsx');
+    }
 }

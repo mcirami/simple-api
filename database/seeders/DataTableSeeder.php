@@ -4,7 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use App\Models\Data;
-use
+
 class DataTableSeeder extends Seeder
 {
     /**
@@ -22,6 +22,9 @@ class DataTableSeeder extends Seeder
             Data::create([
                 'email' => $faker->email,
                 'ip' => $faker->randomFloat(),
+                'source_id' => $faker->randomDigit,
+                'tracking_id' => $faker->randomAscii,
+                'time_stamp' => $faker->dateTime
             ]);
         }
     }

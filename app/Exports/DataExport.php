@@ -2,16 +2,20 @@
 
 namespace App\Exports;
 
-use App\Models\Data;
 use Maatwebsite\Excel\Concerns\FromCollection;
 
 class DataExport implements FromCollection
 {
-    /**
-    * @return \Illuminate\Support\Collection
-    */
+
+    public function __construct($data)
+    {
+
+        $this->data = $data;
+    }
+
     public function collection()
     {
-        return Data::all();
+
+        return $this->data;
     }
 }

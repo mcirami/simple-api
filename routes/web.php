@@ -20,6 +20,8 @@ Route::get('/', function () {
 
 Route::group(['middleware' => 'auth'], function() {
     Route::get('/dashboard', [DataController::class, 'index'])->name('dashboard');
+    Route::get('/dashboard/data', [DataController::class, 'show'])->name('data.show');
+    Route::get('/dashboard/filter', [DataController::class, 'filter'])->name('data.filter');
     Route::get('/export', [DataController::class, 'export'])->name('export');
 });
 

@@ -17,7 +17,7 @@ class DataController extends Controller
     public function show(Request $request) {
         if($request->ajax()) {
             $data = Data::latest()->get();
-            return Datatables::of($data)
+            return DataTables::of($data)
                 ->addIndexColumn()
                 /*->addColumn('action', function($row) {
                     $actionBtn = '<a href="javascript:void(0)" class="delete btn btn-danger btn-sm">Delete</a>';
@@ -67,6 +67,6 @@ class DataController extends Controller
             $query->whereBetween('time_stamp', [request('start_date'), request('end_date')]);
         }
 
-        return Datatables::of($query)->make(true);
+        return DataTables::of($query)->make(true);
     }
 }

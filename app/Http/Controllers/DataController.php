@@ -15,8 +15,11 @@ class DataController extends Controller
     }
 
     public function show(Request $request) {
+        $date = \Carbon\Carbon::today()->subDays(14);
+
         if($request->ajax()) {
-            $data = Data::latest()->get();
+            //$data = Data::latest()->get();
+            $data = Data::where('created_at', '>=', $date)->get();
             return DataTables::of($data)
                 ->addIndexColumn()
                 /*->addColumn('action', function($row) {

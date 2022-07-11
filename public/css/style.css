@@ -466,6 +466,16 @@ footer ul li a:hover, footer ul li#active a {
     text-decoration: none;
 }
 
+.nav-item.logout button {
+    color: #fff !important;
+    font-family: 'Eina03-Bold', sans-serif;
+    font-weight: bold;
+    font-size: 22px;
+    border: none;
+    background: none;
+
+}
+
 @media (max-width: 1024px) {
 }
 

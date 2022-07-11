@@ -53,7 +53,11 @@
         </section>
             <!-- Page Content -->
             <main>
-               @yield('content')
+                @if(\Illuminate\Support\Facades\Route::currentRouteName() == 'dashboard')
+                    {{ $slot }}
+                @else
+                    @yield('content')
+                @endif
             </main>
 
 

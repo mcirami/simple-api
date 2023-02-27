@@ -15,7 +15,7 @@ class DataController extends Controller
     }
 
     public function show(Request $request) {
-        $date = \Carbon\Carbon::today()->subDays(14);
+        $date = \Carbon\Carbon::today()->subDays(7);
 
         if($request->ajax()) {
             //$data = Data::latest()->get();

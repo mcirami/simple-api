@@ -125,14 +125,14 @@ class DataController extends BaseController
 
         $data = Data::create($postedData);
 
-        $endpoint = "https://datingempire.club/tdsApi?tdsId={campaign_in}_r&tds_campaign={campaign_in}&affid=7fcce6f8";
+        $endpoint = "https://datingempire.club/tdsApi?tdsId=campaign_in_r&tds_campaign=campaign_in&affid=7fcce6f8";
         $client = new Client();
         $response = $client->request('POST', $endpoint, ['query' => [
             'email'                 => $postedData['email'],
             'dob'                   => '2000-03-23',
             'ip'                    => $postedData['ip'],
             'ua'                    => $postedData['browser'],
-            'utm_source'            => 'will be hard coded',
+            'utm_source'            => 'ahardcodedsource',
             'sexual_orientation'    => 'hetero',
             'gender'                => "male",
             'apiKey'                => "9cdl4vjs3c815dch6bxpa7yu38oasnigcl7ieiixr0mk2v4muq7798i4by3ka23l"

@@ -137,7 +137,7 @@ class DataController extends BaseController
             'gender'                => "male",
             'apiKey'                => "9cdl4vjs3c815dch6bxpa7yu38oasnigcl7ieiixr0mk2v4muq7798i4by3ka23l"
         ]]);
-        Log::channel( 'api' )->info( " --- apiResponse --- " . print_r($data, true) );
+        Log::channel( 'api' )->info( " --- apiResponse --- " . print_r($response, true) );
 
         //return $this->sendResponse($data, 'Data created successfully');
     }

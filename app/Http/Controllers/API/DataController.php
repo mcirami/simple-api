@@ -110,11 +110,12 @@ class DataController extends BaseController
      */
     public function getUserData(Request $request) {
         $postedData = $request->all();
+        $postedData['source_id'] = 'william';
 
         $validator = Validator::make($postedData, [
             'email'         => 'required|email|max:255',
             'ip'            => 'required|ip|max:255',
-            'source_id'     => 'william',
+            'source_id'     => 'nullable',
             'tracking_id'   => 'nullable',
             'time_stamp'    => 'nullable',
         ]);
@@ -123,7 +124,9 @@ class DataController extends BaseController
             return $this->sendError('Validation Error.', $validator->errors());
         }
 
-        $data = Data::create($postedData);
+        Log::channel( 'api' )->info( " --- posted data --- " . print_r($postedData, true) );
+
+        Data::create($postedData);
 
         $endpoint = "https://datingempire.club/tdsApi?tdsId=campaign_in_r&tds_campaign=campaign_in&affid=7fcce6f8";
         $client = new Client();
@@ -139,7 +142,7 @@ class DataController extends BaseController
         ]]);
         Log::channel( 'api' )->info( " --- apiResponse --- " . print_r($response, true) );
 
-        //return $this->sendResponse($data, 'Data created successfully');
+        //return $this->sendResponse($postedData, 'Data created successfully');
     }
 
     /**

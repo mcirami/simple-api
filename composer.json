@@ -14,7 +14,8 @@
         "laravel/passport": "^11.1",
         "laravel/tinker": "^2.5",
         "maatwebsite/excel": "*",
-        "yajra/laravel-datatables-oracle": "^10.11"
+        "yajra/laravel-datatables-oracle": "^10.11",
+        "ext-curl": "*"
     },
     "require-dev": {
         "spatie/laravel-ignition": "^2.0",

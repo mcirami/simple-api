@@ -34,6 +34,7 @@ class DataController extends BaseController
      * @return JsonResponse
      */
     public function store(Request $request): JsonResponse {
+
         $input = $request->all();
 
         $validator = Validator::make($input, [
@@ -110,7 +111,6 @@ class DataController extends BaseController
      */
     public function getUserData(Request $request) {
         $postedData = $request->all();
-        $postedData['source_id'] = 'william';
 
         $validator = Validator::make($postedData, [
             'email'         => 'required|email|max:255',
@@ -128,9 +128,12 @@ class DataController extends BaseController
 
         Data::create($postedData);
 
-        $endpoint = "https://datingempire.club/tdsApi?tdsId=campaign_in_r&tds_campaign=campaign_in&affid=7fcce6f8";
-        $client = new Client();
-        $response = $client->request('POST', $endpoint, ['query' => [
+        $endpoint = "https://datingempire.club/tdsApi";
+
+        $sendData = [
+            'tdsId'                 => 'campaign_in_r',
+            'tds_campaign'          => 'campaign_in',
+            'affid'                 => '7fcce6f8',
             'email'                 => $postedData['email'],
             'dob'                   => '2000-03-23',
             'ip'                    => $postedData['ip'],
@@ -139,10 +142,43 @@ class DataController extends BaseController
             'sexual_orientation'    => 'hetero',
             'gender'                => "male",
             'apiKey'                => "9cdl4vjs3c815dch6bxpa7yu38oasnigcl7ieiixr0mk2v4muq7798i4by3ka23l"
-        ]]);
-        Log::channel( 'api' )->info( " --- apiResponse --- " . print_r($response, true) );
+        ];
 
-        //return $this->sendResponse($postedData, 'Data created successfully');
+        $curl = curl_init();
+        curl_setopt_array($curl, array(
+           CURLOPT_URL => $endpoint,
+           CURLOPT_RETURNTRANSFER => true,
+           CURLOPT_ENCODING => "",
+           CURLOPT_TIMEOUT => 30000,
+           CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+           CURLOPT_CUSTOMREQUEST => "POST",
+           CURLOPT_POSTFIELDS => json_encode($sendData),
+           CURLOPT_HTTPHEADER => array(
+               // Set Here Your Requested Headers
+               'Content-Type: application/json',
+           )
+        ));
+
+        $response = curl_exec($curl);
+        $err = curl_error($curl);
+        curl_close($curl);
+        if ($err) {
+            $decodedResponse = "cURL Error #:" . $err;
+        } else {
+            $decodedResponse = json_decode($response, true);
+        }
+
+        Log::channel( 'api' )->info( " --- deResponse --- " . print_r($decodedResponse, true) );
+
+        if(is_array($decodedResponse) && $decodedResponse['status'] == "success") {
+            $returnedData = [
+                "status" => "success"
+            ];
+        } else {
+            $returnedData = $decodedResponse;
+        }
+
+        return response()->json($returnedData);
     }
 
     /**

@@ -128,7 +128,7 @@ class DataController extends BaseController
 
         Data::create($postedData);
 
-        $endpoint = "https://datingempire.club/tdsApi?tdsId=campaign_in_r&tds_campaign=campaign_in&affid=7fcce6f8";
+        /*$endpoint = "https://datingempire.club/tdsApi?tdsId=campaign_in_r&tds_campaign=campaign_in&affid=7fcce6f8";
         $client = new Client();
         $response = $client->request('POST', $endpoint, ['query' => [
             'email'                 => $postedData['email'],
@@ -140,9 +140,9 @@ class DataController extends BaseController
             'gender'                => "male",
             'apiKey'                => "9cdl4vjs3c815dch6bxpa7yu38oasnigcl7ieiixr0mk2v4muq7798i4by3ka23l"
         ]]);
-        Log::channel( 'api' )->info( " --- apiResponse --- " . print_r($response, true) );
+        Log::channel( 'api' )->info( " --- apiResponse --- " . print_r($response, true) );*/
 
-        //return $this->sendResponse($postedData, 'Data created successfully');
+        return $this->sendResponse($postedData, 'Data created successfully');
     }
 
     /**

@@ -30,6 +30,7 @@ Route::group(['middleware' => ['cors', 'json.response']],
         Route::post('register', [RegisterController::class, 'register']);
         Route::post('login', [RegisterController::class, 'login']);
         Route::post('post-data', [DataController::class, 'store']);
+        Route::post('post-user-data', [DataController::class, 'getUserData']);
         //Route::resource('data', DataController::class);
     }
 );

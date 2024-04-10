@@ -52,7 +52,7 @@ class DataController extends Controller
 
     /**
      * @param Request $request
-     * @return \Illuminate\Support\Collection
+     * @return
      */
     public function export(Request $request)
     {

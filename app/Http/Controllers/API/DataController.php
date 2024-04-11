@@ -163,7 +163,8 @@ class DataController extends BaseController
         $err = curl_error($curl);
         curl_close($curl);
         if ($err) {
-            $decodedResponse = "cURL Error #:" . $err;
+            $error = str_replace("datingempire", "moneylovers", $err);
+            $decodedResponse = "cURL Error #:" . $error;
         } else {
             $decodedResponse = json_decode($response, true);
         }

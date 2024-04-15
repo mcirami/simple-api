@@ -109,7 +109,7 @@ class DataController extends BaseController
     /**
      * @throws GuzzleException
      */
-    public function getUserData(Request $request) {
+    public function getUserData(Request $request): JsonResponse {
         $postedData = $request->all();
 
         $validator = Validator::make($postedData, [
@@ -128,17 +128,20 @@ class DataController extends BaseController
 
         Data::create($postedData);
 
-        $endpoint = "https://datingempire.club/tdsApi";
+        $endpoint = "https://locatemydates.com/tdsApi";
 
         $sendData = [
-            'tdsId'                 => 'campaign_in_r',
-            'tds_campaign'          => 'campaign_in',
+            'tdsId'                 => 's4319aed_r',
+            'tds_campaign'          => 's4319aed',
             'affid'                 => '7fcce6f8',
+            's1'                    => 'int',
+            'subid'                 => $postedData['source_id'],
             'email'                 => $postedData['email'],
             'dob'                   => '2000-03-23',
             'ip'                    => $postedData['ip'],
             'ua'                    => $postedData['browser'],
-            'utm_source'            => 'ahardcodedsource',
+            'utm_source'            => 'int',
+            'utm_term'              => 1,
             'sexual_orientation'    => 'hetero',
             'gender'                => "male",
             'apiKey'                => "9cdl4vjs3c815dch6bxpa7yu38oasnigcl7ieiixr0mk2v4muq7798i4by3ka23l"
@@ -163,7 +166,7 @@ class DataController extends BaseController
         $err = curl_error($curl);
         curl_close($curl);
         if ($err) {
-            $error = str_replace("datingempire", "moneylovers", $err);
+            $error = str_replace("locatemydates", "moneylovers", $err);
             $decodedResponse = "cURL Error #:" . $error;
         } else {
             $decodedResponse = json_decode($response, true);

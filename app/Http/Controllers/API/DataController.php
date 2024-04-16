@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Validator;
 use App\Models\Data;
 use App\Http\Resources\Data as DataResource;
 use Illuminate\Http\JsonResponse;
+use function PHPUnit\Framework\isJson;
 
 class DataController extends BaseController
 {
@@ -128,23 +129,16 @@ class DataController extends BaseController
 
         Data::create($postedData);
 
-        $endpoint = "https://locatemydates.com/tdsApi";
-
+        $endpoint = "https://locatemydates.com/tdsApi?tdsId=s4319aed_r&tds_campaign=s4319aed&s1=int&utm_source=int&utm_term=1&affid=7fcce6f8&subid=" . $postedData['source_id'] . "&email=" . $postedData['email'];
+        //. "&dob=2000-03-23&ip=" . $postedData['ip'] . "&ua=" . $postedData['browser'] . "&sexual_orientation=hetero&gender=male&apiKey=9cdl4vjs3c815dch6bxpa7yu38oasnigcl7ieiixr0mk2v4muq7798i4by3ka23l"
         $sendData = [
-            'tdsId'                 => 's4319aed_r',
-            'tds_campaign'          => 's4319aed',
-            'affid'                 => '7fcce6f8',
-            's1'                    => 'int',
-            'subid'                 => $postedData['source_id'],
+            'apiKey'                => "9cdl4vjs3c815dch6bxpa7yu38oasnigcl7ieiixr0mk2v4muq7798i4by3ka23l",
             'email'                 => $postedData['email'],
+            'sexual_orientation'    => 'hetero',
+            'gender'                => 'male',
             'dob'                   => '2000-03-23',
             'ip'                    => $postedData['ip'],
-            'ua'                    => $postedData['browser'],
-            'utm_source'            => 'int',
-            'utm_term'              => 1,
-            'sexual_orientation'    => 'hetero',
-            'gender'                => "male",
-            'apiKey'                => "9cdl4vjs3c815dch6bxpa7yu38oasnigcl7ieiixr0mk2v4muq7798i4by3ka23l"
+            'ua'                    => $postedData['browser']
         ];
 
         $curl = curl_init();
@@ -169,7 +163,11 @@ class DataController extends BaseController
             $error = str_replace("locatemydates", "moneylovers", $err);
             $decodedResponse = "cURL Error #:" . $error;
         } else {
-            $decodedResponse = json_decode($response, true);
+            if(isJson($response)) {
+                $decodedResponse = json_decode( $response, true );
+            } else {
+                $decodedResponse = $response;
+            }
         }
 
         Log::channel( 'api' )->info( " --- deResponse --- " . print_r($decodedResponse, true) );

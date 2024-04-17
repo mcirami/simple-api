@@ -163,11 +163,7 @@ class DataController extends BaseController
             $error = str_replace("locatemydates", "moneylovers", $err);
             $decodedResponse = "cURL Error #:" . $error;
         } else {
-            if(isJson($response)) {
-                $decodedResponse = json_decode( $response, true );
-            } else {
-                $decodedResponse = $response;
-            }
+            $decodedResponse = json_decode( $response, true );
         }
 
         Log::channel( 'api' )->info( " --- deResponse --- " . print_r($decodedResponse, true) );

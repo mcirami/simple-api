@@ -56,7 +56,7 @@ class DataController extends Controller
      */
     public function export(Request $request)
     {
-        $query = Data::query()->whereBetween('time_stamp', [ $request->input('start-date'), $request->input('end-date')]);
+        $query = Data::query()->whereBetween('created_at', [ $request->input('start-date'), $request->input('end-date')]);
         $data = $query->get();
         return Excel::download(new DataExport($data), 'data.xlsx');
     }

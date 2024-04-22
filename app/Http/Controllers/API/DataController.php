@@ -2,9 +2,8 @@
 
 namespace App\Http\Controllers\API;
 
-use App\Http\Controllers\Controller;
 use App\Http\Controllers\API\BaseController as BaseController;
-use GuzzleHttp\Client;
+use Carbon\Carbon;
 use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -12,7 +11,6 @@ use Illuminate\Support\Facades\Validator;
 use App\Models\Data;
 use App\Http\Resources\Data as DataResource;
 use Illuminate\Http\JsonResponse;
-use function PHPUnit\Framework\isJson;
 
 class DataController extends BaseController
 {
@@ -112,13 +110,13 @@ class DataController extends BaseController
      */
     public function getUserData(Request $request): JsonResponse {
         $postedData = $request->all();
-
+        $nowEST = Carbon::now()->timezone('America/New_York');
         $validator = Validator::make($postedData, [
             'email'         => 'required|email|max:255',
             'ip'            => 'required|ip|max:255',
             'source_id'     => 'nullable',
             'tracking_id'   => 'nullable',
-            'time_stamp'    => 'nullable',
+            'time_stamp'    => $nowEST->timezone('UTC')->format('Y-m-d H:i:s'),
         ]);
 
         if ($validator->fails()) {

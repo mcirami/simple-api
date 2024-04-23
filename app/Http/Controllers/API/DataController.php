@@ -111,17 +111,20 @@ class DataController extends BaseController
     public function getUserData(Request $request): JsonResponse {
         $postedData = $request->all();
         $nowEST = Carbon::now()->timezone('America/New_York');
+        $timeStamp = $nowEST->timezone('UTC')->format('Y-m-d H:i:s');
         $validator = Validator::make($postedData, [
             'email'         => 'required|email|max:255',
             'ip'            => 'required|ip|max:255',
             'source_id'     => 'nullable',
             'tracking_id'   => 'nullable',
-            'time_stamp'    => $nowEST->timezone('UTC')->format('Y-m-d H:i:s'),
+            'time_stamp'    => $timeStamp,
         ]);
 
         if ($validator->fails()) {
             return $this->sendError('Validation Error.', $validator->errors());
         }
+
+        $postedData['time_stamp'] = $timeStamp;
 
         Log::channel( 'api' )->info( " --- posted data --- " . print_r($postedData, true) );
 

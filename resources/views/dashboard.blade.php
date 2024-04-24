@@ -22,7 +22,7 @@
                     </div>
                     <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mb-4">Export Data</button>
                 </form>
-                <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg col-12">
+                <div class="bg-white overflow-x-scroll shadow-sm sm:rounded-lg col-12">
                     <div class="p-6 bg-white border-b border-gray-200">
                         <table class="table table-bordered yajra-datatable w-100">
                             {{--<form id="filter_form" method="POST">
